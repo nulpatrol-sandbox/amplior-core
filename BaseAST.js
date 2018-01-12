@@ -26,11 +26,26 @@ class BaseAST {
         };
     };
 
-    static arrowFunctionExpression(params, body) {
+    static throwStatement(argument) {
+        return {
+            type: 'ThrowStatement',
+            argument,
+        }
+    };
+
+    static objectPattern(properties) {
+        return {
+            type: "ObjectPattern",
+            properties,
+        }
+    };
+
+    static arrowFunctionExpression(params, body, async = false) {
         return {
             type: 'ArrowFunctionExpression',
             params,
             body,
+            async,
         };
     };
 
@@ -121,7 +136,7 @@ class BaseAST {
         };
     };
 
-    static module(body) {
+    static program(body) {
         return {
             type: 'Program',
             body,
@@ -129,10 +144,12 @@ class BaseAST {
         };
     };
 
-    static ExportNamedDeclaration(declaration) {
+    static exportNamedDeclaration(declaration) {
         return {
             type: 'ExportNamedDeclaration',
             declaration,
+            source: null,
+            specifiers: [],
         };
     };
 
@@ -158,7 +175,7 @@ class BaseAST {
         };
     };
 
-    static variableDeclaration(name, kind, declarations) {
+    static variableDeclaration(kind, declarations) {
         return {
             type: 'VariableDeclaration',
             declarations,
@@ -171,6 +188,24 @@ class BaseAST {
             type: 'ImportDeclaration',
             specifiers,
             source,
+        };
+    };
+
+    static ifStatement(test, consequent, alternate) {
+        return {
+            type: "IfStatement",
+            test,
+            consequent,
+            alternate,
+        };
+    };
+
+    static binaryExpression(operator, left, right) {
+        return {
+            type: "BinaryExpression",
+            operator,
+            left,
+            right,
         };
     };
 }
