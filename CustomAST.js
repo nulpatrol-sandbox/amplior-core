@@ -37,6 +37,54 @@ class CustomAST {
         );
     };
 
+    static apiMethodCall(storage, apiModule, apiMethod) {
+        return BaseAST.variableDeclaration(
+            'const',
+            [
+                BaseAST.variableDeclarator(
+                    BaseAST.identifier(storage),
+                    BaseAST.awaitExpression(
+                        BaseAST.callExpression(
+                            BaseAST.memberExpression(
+                                BaseAST.identifier(apiModule),
+                                BaseAST.identifier(apiMethod),
+                            ),
+                            [],
+                        ),
+                    ),
+                ),
+            ],
+        );
+    };
+
+    static vuexAction(name, body) {
+        return BaseAST.exportNamedDeclaration(
+            BaseAST.variableDeclaration(
+                'const',
+                [
+                    BaseAST.variableDeclarator(
+                        BaseAST.identifier(name),
+                        BaseAST.arrowFunctionExpression(
+                            [
+                                BaseAST.objectPattern(
+                                    [
+                                        BaseAST.property(
+                                            BaseAST.identifier('commit'),
+                                            BaseAST.identifier('commit'),
+                                            true
+                                        ),
+                                    ],
+                                ),
+                            ],
+                            BaseAST.blockStatement(body),
+                            true,
+                        ),
+                    ),
+                ],
+            ),
+        );
+    };
+
     static translation() {
         return BaseAST.objectExpression([
             BaseAST.property(
