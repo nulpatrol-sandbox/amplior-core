@@ -1,7 +1,41 @@
 class BaseAST {
-    static thisExpression() {
+    static assignmentExpression(left, right, operator = '=') {
         return {
-            type: 'ThisExpression',
+            type: 'AssignmentExpression',
+            operator,
+            left,
+            right,
+        };
+    };
+
+    static assignmentPattern(left, right) {
+        return {
+            type: 'AssignmentPattern',
+            left,
+            right,
+        };
+    };
+
+    static arrayExpression(elements) {
+        return {
+            type: 'ArrayExpression',
+            elements,
+        };
+    };
+
+    static arrayPattern(elements) {
+        return {
+            type: 'ArrayPattern',
+            elements,
+        };
+    };
+
+    static arrowFunctionExpression(params, body, async = false) {
+        return {
+            type: 'ArrowFunctionExpression',
+            params,
+            body,
+            async,
         };
     };
 
@@ -9,6 +43,85 @@ class BaseAST {
         return {
             type: 'AwaitExpression',
             argument,
+        };
+    };
+
+    static blockStatement(body) {
+        return {
+            type: 'BlockStatement',
+            body,
+        };
+    };
+
+    static binaryExpression(operator, left, right) {
+        return {
+            type: 'BinaryExpression',
+            operator,
+            left,
+            right,
+        };
+    };
+
+    static breakStatement(label = null) {
+        return {
+            type: 'BreakStatement',
+            label,
+        };
+    };
+
+    static callExpression(callee, args) {
+        return {
+            type: 'CallExpression',
+            callee,
+            arguments: args,
+        };
+    };
+
+    static catchClause(param, body) {
+        return {
+            type: 'CatchClause',
+            param,
+            body,
+        };
+    };
+
+    static classBody(body) {
+        return {
+            type: 'ClassBody',
+            body,
+        };
+    };
+
+    static classDeclaration(id, body, superClass = null) {
+        return {
+            type: 'ClassDeclaration',
+            id,
+            superClass,
+            body,
+        }
+    };
+
+    static classExpression(id, body, superClass = null) {
+        return {
+            type: 'ClassExpression',
+            id,
+            superClass,
+            body,
+        };
+    };
+
+    static conditionalExpression(test, consequent, alternate) {
+        return {
+            type: 'ConditionalExpression',
+            test,
+            consequent,
+            alternate,
+        };
+    };
+
+    static thisExpression() {
+        return {
+            type: 'ThisExpression',
         };
     };
 
@@ -40,15 +153,6 @@ class BaseAST {
         }
     };
 
-    static arrowFunctionExpression(params, body, async = false) {
-        return {
-            type: 'ArrowFunctionExpression',
-            params,
-            body,
-            async,
-        };
-    };
-
     static objectExpression(properties) {
         return {
             type: 'ObjectExpression',
@@ -65,26 +169,10 @@ class BaseAST {
         };
     };
 
-    static assignmentExpression(left, right, operator = '=') {
-        return {
-            type: 'AssignmentExpression',
-            operator,
-            left,
-            right,
-        };
-    };
-
     static expressionStatement(expression) {
         return {
             type: 'ExpressionStatement',
             expression,
-        };
-    };
-
-    static arrayExpression(elements) {
-        return {
-            type: 'ArrayExpression',
-            elements,
         };
     };
 
@@ -93,13 +181,6 @@ class BaseAST {
             type: 'Identifier',
             name,
         }
-    };
-
-    static blockStatement(body) {
-        return {
-            type: 'BlockStatement',
-            body,
-        };
     };
 
     static property(key, value, shorthand = false) {
@@ -113,19 +194,12 @@ class BaseAST {
         };
     };
 
-    static memberExpression(object, property) {
+    static memberExpression(object, property, computed = false) {
         return {
             type: 'MemberExpression',
             object,
             property,
-        };
-    };
-
-    static callExpression(callee, args) {
-        return {
-            type: 'CallExpression',
-            callee,
-            arguments: args,
+            computed,
         };
     };
 
@@ -197,15 +271,6 @@ class BaseAST {
             test,
             consequent,
             alternate,
-        };
-    };
-
-    static binaryExpression(operator, left, right) {
-        return {
-            type: "BinaryExpression",
-            operator,
-            left,
-            right,
         };
     };
 }
